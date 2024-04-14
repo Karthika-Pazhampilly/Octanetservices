@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>To-Do List</title>
+<link rel="stylesheet" href="tl.css"> <!-- Link to your CSS file -->
+</head>
+<body>
+
+<div class="container">
+    <h1>To-Do List</h1>
+
+    <form id="task-form">
+        <div class="form-group">
+            <label for="task-name">Task Name</label>
+            <input type="text" id="task-name" name="task-name" required>
+        </div>
+        <div class="form-group">
+            <label for="deadline">Deadline</label>
+            <input type="date" id="deadline" name="deadline" required>
+        </div>
+        <div class="form-group">
+            <label for="priority">Priority</label>
+            <select id="priority" name="priority" required>
+                <option value="high">High</option>
+                <option value="medium">Medium</option>
+                <option value="low">Low</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="label">Label</label>
+            <input type="text" id="label" name="label" required>
+        </div>
+        <button type="submit" class="btn-add">Add Task</button>
+    </form>
+
+    <ul class="todo-list" id="todo-list">
+        <!-- Tasks will be added here dynamically -->
+    </ul>
+</div>
+
+<script>
+document.getElementById("task-form").addEventListener("submit", function(event) {
+    event.preventDefault(); // Prevent form submission from reloading the page
+
+    // Get form values
+    var taskName = document.getElementById("task-name").value;
+    var deadline = document.getElementById("deadline").value;
+    var priority = document.getElementById("priority").value;
+    var label = document.getElementById("label").value;
+
+    // Create task object
+    var task = {
+        name: taskName,
+        deadline: deadline,
+        priority: priority,
+        label: label
+    };
+
+    // Add task to the to-do list
+    addTask(task);
+
+    // Clear form fields
+    document.getElementById("task-name").value = "";
+    document.getElementById("deadline").value = "";
+    document.getElementById("priority").value = "";
+    document.getElementById("label").value = "";
+});
+
+// Function to add tasks to the to-do list
+function addTask(task) {
+    var todoList = document.getElementById("todo-list");
+    var listItem = document.createElement("li");
+    listItem.className = "task priority-" + task.priority;
+
+    var taskDetails = "<strong>" + task.name + "</strong>";
+    taskDetails += " | Deadline: " + task.deadline;
+    taskDetails += " | Priority: " + task.priority;
+    taskDetails += " | Label: " + task.label;
+
+    listItem.innerHTML = taskDetails;
+    todoList.appendChild(listItem);
+}
+</script>
+
+</body>
+</html>
